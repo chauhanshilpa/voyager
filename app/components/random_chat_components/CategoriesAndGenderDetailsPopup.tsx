@@ -49,7 +49,7 @@ const CategoriesAndGenderDetailsPopup = () => {
     updateUserData();
 
     const list: RandomCandidate[] = await fetch(
-      `http://${IP_ADDRESS}/v1.0/voyager/user/list-users-interest/${interestValue}/${userId}`,
+      `https://${IP_ADDRESS}/v1.0/voyager/user/list-users-interest/${interestValue}/${userId}`,
       {
         method: "GET",
         headers: {
@@ -82,7 +82,7 @@ const CategoriesAndGenderDetailsPopup = () => {
       sub_id: subId,
       interest: interestValue,
     };
-    await fetch(`http://${IP_ADDRESS}/v1.0/voyager/user`, {
+    await fetch(`https://${IP_ADDRESS}/v1.0/voyager/user`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
@@ -176,7 +176,7 @@ const CategoriesAndGenderDetailsPopup = () => {
                     aria-hidden="true"
                     height="10"
                     width="10"
-                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns="https://www.w3.org/2000/svg"
                     onClick={() => setInterestValue(undefined)}
                   >
                     <path

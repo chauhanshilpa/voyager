@@ -36,7 +36,7 @@ const CategoriesDropdown = ({
     if (!isMenuOpen) {
       try {
         const response = await fetch(
-          `http://${IP_ADDRESS}/v1.0/voyager/categories/${category}`
+          `https://${IP_ADDRESS}/v1.0/voyager/categories/${category}`
         );
         const list = await response.json();
         if (category === "interests") {
@@ -69,7 +69,7 @@ const CategoriesDropdown = ({
         <svg
           className="w-2.5 h-2.5 ms-3 cursor-pointer"
           aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
+          xmlns="https://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 10 6"
         >
