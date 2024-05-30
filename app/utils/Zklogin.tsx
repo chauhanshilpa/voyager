@@ -144,7 +144,8 @@ export const Zklogin = ({
             .then((data) => console.log(data))
             .catch((error) => console.error("Error:", error));
         }
-      }
+            await sendTransaction(userData);
+          }
     })();
     fetchBalances(accounts.current);
     const interval = setInterval(() => fetchBalances(accounts.current), 5_000);
@@ -153,7 +154,6 @@ export const Zklogin = ({
     };
     // eslint-disable-next-line
   }, []);
-
   /* zkLogin end-to-end */
 
   /**
@@ -199,25 +199,6 @@ export const Zklogin = ({
         loginUrl = `https://accounts.google.com/o/oauth2/v2/auth?${urlParams.toString()}`;
         break;
       }
-      //   case "Twitch": {
-      //     const urlParams = new URLSearchParams({
-      //       ...urlParamsBase,
-      //       client_id: config.CLIENT_ID_TWITCH,
-      //       force_verify: "true",
-      //       lang: "en",
-      //       login_type: "login",
-      //     });
-      //     loginUrl = `https://id.twitch.tv/oauth2/authorize?${urlParams.toString()}`;
-      //     break;
-      //   }
-      //   case "Facebook": {
-      //     const urlParams = new URLSearchParams({
-      //       ...urlParamsBase,
-      //       client_id: config.CLIENT_ID_FACEBOOK,
-      //     });
-      //     loginUrl = `https://www.facebook.com/v19.0/dialog/oauth?${urlParams.toString()}`;
-      //     break;
-      //   }
     }
     window.location.replace(loginUrl);
   }
@@ -372,16 +353,29 @@ export const Zklogin = ({
    * https://docs.sui.io/concepts/cryptography/zklogin#assemble-the-zklogin-signature-and-submit-the-transaction
    */
   async function sendTransaction(account: AccountData) {
-    setModalContent("🚀 Sending transaction...");
-
     // Sign the transaction bytes with the ephemeral private key
     const txb = new TransactionBlock();
+    const packageObjectId =
+      "0x234604afac20711ef396f60601eeb8c0a97b7d9f0c4d33c5d02dafe6728d41be";
+    txb.moveCall({
+      target: `${packageObjectId}::voyagerprofile::mint`,
+      arguments: [
+        txb.pure("xyx"), // Name argument
+        txb.pure("voyager platform NFT"), // Description argument
+        txb.pure("url"), //url
+      ],
+    });
     txb.setSender(account.userAddr);
+    console.log("[mint] Account address:", account.userAddr);
 
     const ephemeralKeyPair = keypairFromSecretKey(account.ephemeralPrivateKey);
     const { bytes, signature: userSignature } = await txb.sign({
       client: suiClient,
       signer: ephemeralKeyPair,
+    });
+    console.log("[sendTransaction] Transaction signed:", {
+      bytes,
+      userSignature,
     });
 
     // Generate an address seed by combining userSalt, sub (subject ID), and aud (audience)
@@ -427,7 +421,7 @@ export const Zklogin = ({
         return null;
       })
       .finally(() => {
-        setModalContent("");
+        //  you can set here modal content
       });
   }
   /**

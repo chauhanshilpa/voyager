@@ -11,33 +11,38 @@ import {
   PROFILE_PAGE_POAPS_CARDS,
 } from "../../utils/constants";
 import Footer from "@/app/components/reusable/Footer";
-import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { FaHeart } from "react-icons/fa";
 import TabsCards from "@/app/components/profile_components/TabsCards";
 import { CiEdit } from "react-icons/ci";
 import Link from "next/link";
 import EditProfilePopup from "@/app/components/profile_components/EditProfilePopup";
-interface UserData {
-  id: string;
-  user_address: string;
-  sub_id: string;
-  name: string;
-  provider: string;
-  gender: string;
-  interest: string;
-  location: string;
-}
+import { SuiClient, getFullnodeUrl } from "@mysten/sui.js/client";
+
+// interface UserData {
+//   id: string;
+//   user_address: string;
+//   sub_id: string;
+//   name: string;
+//   provider: string;
+//   gender: string;
+//   interest: string;
+//   location: string;
+// }
 
 const Profile = () => {
   const [isEditProfileClicked, setIsEditProfileClicked] = useState(false);
   const [activeTab, setActiveTab] = useState("Cults");
-  const [userData, setUserData] = useState<UserData>();
-  
+  const [userData, setUserData] = useState();
+  const [nftData, setNftData] = useState();
+
   const IP_ADDRESS = process.env.NEXT_PUBLIC_SERVER_IP_ADDRESS;
 
   const searchParams = useSearchParams();
 
   const subId = searchParams.get("userNo");
   const userAddress = searchParams.get("userAddress");
+  console.log(nftData?.filter((data) => data.content.type));
+  const nftDataList = nftData?.filter((data) => data.content.type);
 
   useEffect(() => {
     let getUserData;
@@ -69,8 +74,46 @@ const Profile = () => {
       setUserData(getUserData);
     })();
     // eslint-disable-next-line
-  }, [userData]);
-  
+  }, []);
+
+  useEffect(() => {
+    const getnft = async () => {
+      const suiClient = new SuiClient({ url: getFullnodeUrl("devnet") });
+      const objects = await suiClient.getOwnedObjects({
+        owner: userAddress,
+      });
+
+      console.log("objet", objects);
+      const widgets = [];
+
+      // iterate through all objects owned by address
+      for (let i = 0; i < objects.data.length; i++) {
+        const currentObjectId = objects.data[i].data.objectId;
+
+        // get object information
+        const objectInfo = await suiClient.getObject({
+          id: currentObjectId,
+          options: { showContent: true },
+        });
+
+        console.log("objectInfo", objectInfo);
+        // const packageId =
+        //   "0x234604afac20711ef396f60601eeb8c0a97b7d9f0c4d33c5d02dafe6728d41be";
+        if (
+          objectInfo?.data?.content?.type ==
+          `0x234604afac20711ef396f60601eeb8c0a97b7d9f0c4d33c5d02dafe6728d41be::voyagerprofile::NFT`
+        ) {
+          // const widgetObjectId = objectInfo.data.content.fields.id.id;
+          const widgetObjectId = objectInfo.data;
+          console.log("widget spotted:", widgetObjectId);
+          widgets.push(widgetObjectId);
+        }
+      }
+      setNftData(widgets);
+    };
+    getnft();
+  }, [userAddress]);
+
   return (
     <main className="w-[95vw] mx-auto p-10">
       <ProfileNavbar />
@@ -79,6 +122,8 @@ const Profile = () => {
           setIsEditProfileClicked={setIsEditProfileClicked}
           userAddress={userAddress}
           subId={subId}
+          userData={userData}
+          setNftData={setNftData}
         />
       )}
       <hr className="mt-5" />

@@ -100,7 +100,7 @@ const NewChat = () => {
         setFriendList={setFriendList}
         setLike={setLike}
       />
-      <div className="flex flex-col justify-between h-[100vh] w-full ml-[25%] bg-[#35374B]">
+      <div className="flex flex-col justify-between h-[100vh] w-[75%] ml-[25%] bg-[#35374B]">
         <RandomChatNavbar
           like={like}
           setLike={setLike}
@@ -108,11 +108,10 @@ const NewChat = () => {
         />
         <div className="p-2 m-5 h-full overflow-auto">
           {chatData.map((data, idx) => (
-            <>
+            <div key={uuidv4()}>
               {data.reciverUserId === cachedUserId ? (
                 <div
                   ref={scrollElementRef}
-                  key={uuidv4()}
                   className="rounded-l-full rounded-r-full px-3 py-1 text-black max-w-fit mb-3 float-right bg-[#BFACE0]
               clear-both"
                 >
@@ -121,13 +120,12 @@ const NewChat = () => {
               ) : (
                 <div
                   ref={scrollElementRef}
-                  key={uuidv4()}
                   className="bg-white rounded-l-full rounded-r-full px-3 py-1 text-black max-w-fit mb-3 float-left clear-both"
                 >
                   {data.content}
                 </div>
               )}
-            </>
+            </div>
           ))}
         </div>
         <div className="w-full">
