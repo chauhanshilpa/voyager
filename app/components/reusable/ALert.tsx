@@ -20,7 +20,7 @@ export const Alert = ({ message, setFunction }: Props) => {
             height="25"
             viewBox="0 0 24 24"
             fill="none"
-            xmlns="https://www.w3.org/2000/svg"
+            xmlns="http://www.w3.org/2000/svg"
             onClick={() => setFunction(false)}
           >
             <path
