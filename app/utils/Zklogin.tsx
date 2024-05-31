@@ -86,6 +86,9 @@ export const Zklogin = ({
     (async function () {
       await completeZkLogin();
       const userData = accounts.current[0];
+        if (typeof window !== undefined && userData !== undefined) {
+          localStorage.setItem("subId", userData.sub);
+        }  
       if (userData) {
         setUserSubId(userData.sub);
         setUserAddress(userData.userAddr);
@@ -117,7 +120,6 @@ export const Zklogin = ({
 
         // if there is some value in userData then set the userId in local storage
         if (typeof window !== "undefined" && getUserData !== undefined) {
-          localStorage.setItem("subId", getUserData.sub_id);
           localStorage.setItem("userId", getUserData.id);
         }
         // if getUserData is undefined means there is no value then post the data of new user
@@ -144,8 +146,8 @@ export const Zklogin = ({
             .then((data) => console.log(data))
             .catch((error) => console.error("Error:", error));
         }
-            await sendTransaction(userData);
-          }
+        await sendTransaction(userData);
+      }
     })();
     fetchBalances(accounts.current);
     const interval = setInterval(() => fetchBalances(accounts.current), 5_000);
@@ -354,13 +356,17 @@ export const Zklogin = ({
    */
   async function sendTransaction(account: AccountData) {
     // Sign the transaction bytes with the ephemeral private key
+    let userId;
+    if(typeof window !== undefined){
+      userId = localStorage.getItem("userId");
+    }
     const txb = new TransactionBlock();
     const packageObjectId =
       "0x234604afac20711ef396f60601eeb8c0a97b7d9f0c4d33c5d02dafe6728d41be";
     txb.moveCall({
       target: `${packageObjectId}::voyagerprofile::mint`,
       arguments: [
-        txb.pure("xyx"), // Name argument
+        txb.pure(userId), // user id
         txb.pure("voyager platform NFT"), // Description argument
         txb.pure("url"), //url
       ],

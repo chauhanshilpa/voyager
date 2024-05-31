@@ -285,7 +285,7 @@ const FriendProfile = () => {
     // Sign the transaction bytes with the ephemeral private key
     const txb = new TransactionBlock();
     const packageObjectId =
-      "0x234604afac20711ef396f60601eeb8c0a97b7d9f0c4d33c5d02dafe6728d41be";
+      "0x060e7b1582b32e66db840e3c0ddd54c85adea2caaa43de1e294b2634b23be223";
     txb.moveCall({
       target: `${packageObjectId}::voyagerprofile::update_hearts`,
       arguments: [
@@ -419,50 +419,6 @@ const FriendProfile = () => {
     }
     return [];
   }
-
-  // useEffect(() => {
-  //   const getnft = async () => {
-  //     // setLoading(true);
-  //     const suiClient = new SuiClient({ url: getFullnodeUrl("devnet") });
-  //     const objects = await suiClient.getOwnedObjects({
-  //       owner: userData?.user_address,
-  //     });
-
-  //     console.log("objet", objects);
-  //     const widgets = [];
-
-  //     // iterate through all objects owned by address
-  //     for (let i = 0; i < objects.data.length; i++) {
-  //       const currentObjectId = objects.data[i].data.objectId;
-
-  //       // get object information
-  //       const objectInfo = await suiClient.getObject({
-  //         id: currentObjectId,
-  //         options: { showContent: true },
-  //       });
-
-  //       console.log("objectInfo", objectInfo);
-  //       const packageId =
-  //         "0x234604afac20711ef396f60601eeb8c0a97b7d9f0c4d33c5d02dafe6728d41be";
-
-  //       if (
-  //         objectInfo?.data?.content?.type ==
-  //         `${packageId}::addrx::voyagerprofile`
-  //       ) {
-  //         // const widgetObjectId = objectInfo.data.content.fields.id.id;
-  //         const widgetObjectId = objectInfo.data;
-  //         console.log("widget spotted:", widgetObjectId);
-  //         widgets.push(widgetObjectId);
-  //       }
-  //     }
-
-  //     console.log("widgets:", widgets);
-  //     setNftData(widgets);
-  //     // setLoading(false);
-  //   };
-
-  //   getnft();
-  // }, [userData?.user_address]);
 
   return (
     <main className="w-[95vw] mx-auto p-10">

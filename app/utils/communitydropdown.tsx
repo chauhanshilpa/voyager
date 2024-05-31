@@ -10,7 +10,7 @@ const CommunityDropdown: React.FC = () => {
         className=" text-black py-2 px-4 rounded inline-flex items-center"
       >
         <span className="mr-1">Community</span>
-        <svg className="fill-current h-8 w-8" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 20 20">
+        <svg className="fill-current h-8 w-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
           <path d="M5.5 7l4.5 4 4.5-4z" />
         </svg>
       </button>
