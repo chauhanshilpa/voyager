@@ -35,7 +35,7 @@ export const CULT_PAGE_KEYFEATURES_IMAGE = [
   },
   {
     src: "/c3.png",
-    community_interest: "Opinion Polls",
+    community_interest: "Opinions",
   },
   {
     src: "/c4.png",
@@ -45,15 +45,15 @@ export const CULT_PAGE_KEYFEATURES_IMAGE = [
 
 export const CULT_PAGE_COMMUNITIES_IMAGE = [
   {
-    src: "/temple.jpg",
+    src: "/a.jpg",
     community_interest: "Society Spot",
   },
   {
-    src: "/temple.jpg",
+    src: "/a.jpg",
     community_interest: "Unity Hub",
   },
   {
-    src: "/temple.jpg",
+    src: "/a.jpg",
     community_interest: "Neighbor Connect",
   },
 ];
