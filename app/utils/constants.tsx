@@ -54,7 +54,7 @@ export const CULT_PAGE_COMMUNITIES_IMAGE = [
   },
   {
     src: "/a.jpg",
-    community_interest: "Neighbor Connect",
+    community_interest: "Neighbour Connect",
   },
 ];
 
@@ -62,15 +62,15 @@ export const CULT_PAGE_COMMUNITIES_IMAGE = [
 export const PROFILE_PAGE_MY_JOURNEY_CARDS = [
   {
     src: "https://img.freepik.com/free-photo/happy-people-together-looking-camera_23-2148270959.jpg?t=st=1716446440~exp=1716450040~hmac=4ad13814bda201084992b39821a4986a58732b09949f7368f64adfd4ed8800ea&w=826",
-    name: "Party",
+    name: "Society Spot",
   },
   {
     src: "https://img.freepik.com/free-photo/full-shot-family-running-meadow_23-2149049214.jpg?t=st=1716448673~exp=1716452273~hmac=b9a4198945cd59ccefc73d17c0cb4a179bac528d81696cebb702e15f94019703&w=826",
-    name: "Family",
+    name: "Unity Hub",
   },
   {
     src: "https://img.freepik.com/free-photo/spending-hot-day-seashore_1098-15284.jpg?t=st=1716448905~exp=1716452505~hmac=cb2f94bf3d3a479b06396317d1d8eabf123154c76bc8e96c1a89ef4c71f8d8bb&w=826",
-    name: "Travel",
+    name: "Neighbour",
   },
 ];
 
